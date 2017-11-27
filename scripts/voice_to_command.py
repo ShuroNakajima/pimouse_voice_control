@@ -32,7 +32,7 @@ class JuliusReceiver:
         self.sock.close()
         rospy.ServiceProxy('/motor_off', Trigger).call()
 
-    def score(self, th):
+    def score(self, line):
         return float(line.split('CM="')[-1].split('"')[0])
 
     def pub_command(self, th):
@@ -43,10 +43,8 @@ class JuliusReceiver:
 
         if "左" in line: self.tm(-400, 400, 300)
         elif "右" in line: self.tm(400, -400, 300)
-        elif "前" in line: self.tm(400, 400, 3000)
-        elif "後" in line: self.tm(-400, -40, 1500)
-
-        return command
+        elif "前" in line: self.tm(400, 400, 2000)
+        elif "後" in line: self.tm(-400, -400, 1000)
 
 if __name__=='__main__':
     rospy.init_node("voice_to_command")
